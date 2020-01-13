@@ -30,7 +30,7 @@ jobs:
     - name: Commit results
       run: |
         ls
-        cp ../devito/README.md .
+        cp ../README.md .
         git add README.md
         git commit -m "readme"
       working-directory: test
