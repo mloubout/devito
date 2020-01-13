@@ -27,7 +27,6 @@ jobs:
 
     - name: Commit results
       run: |
-        ls
         ls ../
         cp ../devito/README.md .
         git add README.md
