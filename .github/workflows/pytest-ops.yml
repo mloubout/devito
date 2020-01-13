@@ -16,19 +16,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout devito
-      uses: actions/checkout@v1
-      with:
-        path: devito
-  
+
     - name: Checkout pres
       uses: actions/checkout@v2
       with:
         repository: mloubout/presentations
 
+    - name: Checkout devito
+      uses: actions/checkout@v2
+      with:
+        path: devito
+
     - name: Commit results
       run: |
-        cp devito/README.md .
+        cp ./devito/README.md .
         git add README.md
         git commit -m "readme"
         git status
