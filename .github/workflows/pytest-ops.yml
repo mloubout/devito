@@ -21,6 +21,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         repository: mloubout/presentations
+        path: test
 
     - name: Checkout devito
       uses: actions/checkout@v2
@@ -29,7 +30,7 @@ jobs:
 
     - name: Commit results
       run: |
-        cp ./devito/README.md .
+        cp /home/runner/work/devito/README.md .
         git add README.md
         git commit -m "readme"
         git status
