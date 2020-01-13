@@ -18,7 +18,9 @@ jobs:
     steps:
     - name: Checkout devito
       uses: actions/checkout@v1
-
+      with:
+        path: devito
+  
     - name: Checkout pres
       uses: actions/checkout@v2
       with:
