@@ -37,7 +37,7 @@ jobs:
 
           - name: macOS-10.14-gcc-py37
             os: macOS-10.14
-            compiler: gcc
+            compiler: gcc-9
 
     steps:
     - name: Checkout devito
