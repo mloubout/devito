@@ -30,7 +30,8 @@ jobs:
         cp ../devito/README.md .
         git add README.md
         git commit -m "readme"
-        
+      working-directory: test
+
     - name: Push results
       uses: ad-m/github-push-action@master
       with:
