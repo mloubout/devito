@@ -29,6 +29,8 @@ jobs:
 
     - name: Commit results
       run: |
+        git config --global user.email "mathias.louboutin@gmail.com"
+        git config --global user.name "mloubout"
         ls
         cp ../README.md .
         git add README.md
