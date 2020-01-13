@@ -22,8 +22,10 @@ jobs:
 
       - name: Commit results
         run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
           cp README.md LITMOI.md
-          git add README.md
+          git add LITMOI.md
           git commit -m "readme"
           git status
 
