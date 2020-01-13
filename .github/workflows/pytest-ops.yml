@@ -30,7 +30,7 @@ jobs:
 
     - name: Commit results
       run: |
-        cp /home/runner/work/devito/README.md .
+        cp /home/runner/work/devito/devito/README.md .
         git add README.md
         git commit -m "readme"
         git status
