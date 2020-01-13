@@ -29,11 +29,14 @@ jobs:
 
     - name: Commit results
       run: |
-        git config --global user.email "mathias.louboutin@gmail.com"
-        git config --global user.name "mloubout"
-        git remote set-url --push origin https://mloubout:${{ secrets.PERSO }}@github.com/mloubout/presentations.git
         cp ../README.md .
         git add README.md
         git commit -m "readme"
-        git push origin master
       working-directory: test
+
+    - name: Push results
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.PERSO }}
+        directory: test
+        repository: mloubout/presentations
