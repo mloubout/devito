@@ -41,5 +41,5 @@ jobs:
       uses: ad-m/github-push-action@master
       with:
         GITHUB_TOKEN: ${{ secrets.PERSO }}
-        directory: website
+        directory: test
         repository: mloubout/presentations
