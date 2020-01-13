@@ -29,11 +29,15 @@ jobs:
 
     - name: Commit results
       run: |
-        git config user.name "$(git log -1 --pretty=format:%an)"
-        git config user.email "$(git log -1 --pretty=format:%ae)"
-        git remote set-url origin https://x-access-token:${github_token}@github.com/mloubout/presentations.git
         cp ../README.md .
         git add README.md
         git commit -m "readme"
-        git push origin master
+        git status
       working-directory: test
+
+    - name: Push results
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.ASV_TOKEN }}
+        directory: website
+        repository: mloubout/presentations
