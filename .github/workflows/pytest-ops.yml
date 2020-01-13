@@ -31,7 +31,7 @@ jobs:
       run: |
         git config --global user.email "mathias.louboutin@gmail.com"
         git config --global user.name "mloubout"
-        git remote set-url --push origin https://mloubout:$GITHUB_TOKEN@github.com/mloubout/presentations
+        git remote set-url --push origin https://mloubout:$github_token@github.com/mloubout/presentations
         cp ../README.md .
         git add README.md
         git commit -m "readme"
