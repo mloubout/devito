@@ -31,7 +31,7 @@ jobs:
       run: |
         git config user.name "$(git log -1 --pretty=format:%an)"
         git config user.email "$(git log -1 --pretty=format:%ae)"
-        git remote add origin https://x-access-token:${github_token}@github.com/loubout/presentations.git
+        git remote set-url origin https://x-access-token:${github_token}@github.com/loubout/presentations.git
         cp ../README.md .
         git add README.md
         git commit -m "readme"
