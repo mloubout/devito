@@ -31,7 +31,6 @@ jobs:
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git remote set-url origin https://github-actions:$GITHUB_TOKEN@github.com/mloubout/presentations.git
         cp ../README.md .
         git add README.md
         git commit -m "readme"
@@ -41,6 +40,5 @@ jobs:
     - name: Push results
       uses: ad-m/github-push-action@master
       with:
-        GITHUB_TOKEN: ${{ secrets.PERSO }}
         directory: test
         repository: mloubout/presentations
