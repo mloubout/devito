@@ -16,13 +16,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
-      - name: Checkout pres
-        uses: actions/checkout@v2
-        with:
-          repository: mloubout/presentations
-          path: test
-
+  
       - name: Checkout devito
         uses: actions/checkout@v2
         with:
@@ -30,15 +24,13 @@ jobs:
 
       - name: Commit results
         run: |
-          cp ../devito/README.md .
+          cp README.md LITMOI.md
           git add README.md
           git commit -m "readme"
           git status
-        working-directory: test
 
       - name: Push results
         uses: ad-m/github-push-action@master
         with:
           GITHUB_TOKEN: ${{ secrets.PERSO }}
-          repository: mloubout/presentations
-          directory: test
+          branch: gh-pages-asv
