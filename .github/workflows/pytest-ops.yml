@@ -40,6 +40,6 @@ jobs:
     - name: Push results
       uses: ad-m/github-push-action@master
       with:
-        github_token: ${{ secrets.ASV_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.ASV_TOKEN }}
         directory: website
         repository: mloubout/presentations
