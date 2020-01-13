@@ -35,11 +35,5 @@ jobs:
         cp ../README.md .
         git add README.md
         git commit -m "readme"
+        git push origin master
       working-directory: test
-
-    - name: Push results
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.PERSO }}
-        directory: test
-        repository: mloubout/presentations
