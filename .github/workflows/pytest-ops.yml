@@ -25,13 +25,16 @@ jobs:
 
     - name: Checkout devito
       uses: actions/checkout@v2
-
+      with:
+        path: devito
+        
     - name: Commit results
       run: |
-        cp /home/runner/work/devito/devito/README.md .
+        cp ../devito/README.md .
         git add README.md
         git commit -m "readme"
         git status
+      working-directory: test
 
     - name: Push results
       uses: ad-m/github-push-action@master
