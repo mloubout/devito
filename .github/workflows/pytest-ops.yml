@@ -15,20 +15,11 @@ jobs:
     name: push to other repo
     runs-on: ubuntu-latest
 
-    strategy:
-      # Prevent all build to stop if a single one fails
-      fail-fast: false
-
     steps:
     - name: Checkout devito
       uses: actions/checkout@v1
 
-    - name: Set up Python 3.7
-      uses: actions/setup-python@v1
-      with:
-        python-version: 3.7
-
-    - name: Checkout prese
+    - name: Checkout pres
       uses: actions/checkout@v2
       with:
         repository: mloubout/presentations
@@ -44,5 +35,5 @@ jobs:
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.PERSO }}
-        directory: website
+        directory: test
         repository: mloubout/presentations
