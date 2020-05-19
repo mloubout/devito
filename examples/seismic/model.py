@@ -210,7 +210,7 @@ class SeismicModel(GenericModel):
 
     """
     def __init__(self, origin, spacing, shape, space_order, vp, nbl=20,
-                 dtype=np.float32, subdomains=(), bcs="damp", grid=None, **kwargs):
+                 dtype=np.float32, subdomains=(), bcs="mask", grid=None, **kwargs):
         super(SeismicModel, self).__init__(origin, spacing, shape, space_order, nbl,
                                            dtype, subdomains, grid=grid, bcs=bcs)
 
@@ -220,7 +220,7 @@ class SeismicModel(GenericModel):
         # Initialize physics
         self._initialize_physics(space_order, **kwargs)
 
-        # User provided dt
+        # User provided dt
         self._dt = kwargs.get('dt')
 
     def _initialize_physics(self, space_order, **kwargs):
@@ -235,24 +235,31 @@ class SeismicModel(GenericModel):
         - tti: epsilon + delta + theta + phi
         """
         params = []
-        self._scale = 1
         # Make sure only one of density and buoyancy is in input
         if 'rho' in kwargs.keys() and 'b' in kwargs.keys():
-            assert 1 /  kwargs.get('rho') == kwargs.get('b')
+            assert 1 / kwargs.get('rho') == kwargs.get('b')
             kwargs.pop('rho')
-        # Initialize input physical parameters
+        # Initialize input physical parameters
         for k, v in kwargs.items():
             setattr(self, k, self._gen_phys_param(v, k, space_order))
             params.append(k)
-        # Update scale for tti
-        if 'epsilon' in params:
-            self._scale += 2 * np.max(kwargs.get('epsilon')) 
-        # Set CFL constant
-        self._cfl_coeff = .85 / np.sqrt(self.dim)
 
     @property
     def _max_vp(self):
         return mmax(self.vp)
+
+    @property
+    def _scale(self):
+        # Update scale for tti
+        if 'epsilon' in self._physical_parameters:
+            return 1 + 2 * mmax(self.epsilon)
+        return 1
+
+    @property
+    def _cfl_coeff(self):
+        if 'vs' in self._physical_parameters:
+            return .85 / np.sqrt(3.)
+        return 0.28 if len(self.shape) == 3 else 0.31
 
     @property
     def critical_dt(self):
@@ -286,7 +293,7 @@ class SeismicModel(GenericModel):
             elif value.shape == self.shape:
                 initialize_function(param, value, self.nbl)
             else:
-                raise ValueError("Incorrect input size %s for model of size" % value.shape +
+                raise ValueError("Incorrect input size %s for model" % value.shape +
                                  " %s without or %s with padding" % (self.shape,
                                                                      param.shape))
         else:
@@ -298,6 +305,20 @@ class SeismicModel(GenericModel):
         Squared slowness
         """
         return 1 / (self.vp * self.vp)
+
+    @property
+    def lam(self):
+        """
+        First Lame parameter
+        """
+        return self.vp**2/self.b - self.mu
+
+    @property
+    def mu(self):
+        """
+        Second Lame parameter
+        """
+        return self.vs**2/self.b
 
     def smooth(self, physical_parameters, sigma=5.0):
         """
@@ -314,11 +335,6 @@ class SeismicModel(GenericModel):
         for i in physical_parameters:
             gaussian_smooth(model_parameters[i], sigma=sigma)
         return
-
-    @property
-    def spacing_map(self):
-        subs = super(SeismicModel, self).spacing_map
-        subs.update({self.grid.time_dim.spacing: self.critical_dt})
 
 
 # For backward ompativility
