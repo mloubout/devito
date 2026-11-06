@@ -59,6 +59,7 @@ dependencies = { file = ["requirements.txt"] }
 
 [tool.setuptools.dynamic.optional-dependencies]
 # Map each extra to its requirements-*.txt
+torch  = { file = ["requirements-torch.txt"] }
 mpi    = { file = ["requirements-mpi.txt"] }
 nvidia = { file = ["requirements-nvidia.txt"] }
 tests  = { file = ["requirements-testing.txt"] }
