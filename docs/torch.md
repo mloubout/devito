@@ -126,8 +126,8 @@ through negative slices writes back to the original allocation. Combining
 negative strides with advanced tensor indexing is not currently supported.
 
 For an explicit differentiable integration, see
-[the diffusion layer example](../examples/pytorch/devito_layer.py).
-That CPU-only `nn.Module`
+[the diffusion layer example](../examples/pytorch/devito_layer.py) and
+[the network walkthrough](blog/devito-pytorch.md). That CPU-only `nn.Module`
 supplies a verified first-order input adjoint for a fixed linear diffusion
 operator. Its native kernels receive detached workspaces; the autograd bridge
 does not make arbitrary Operators or physical coefficients differentiable.
